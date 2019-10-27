@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>历史记录</title>
+</head>
+<br>
+    <h1>你好，{{username}}！</h1><br>
+    <div class="text-center" >
+        {% for record in records %}
+            <span>记录： 用户名：{{record.username}}, 序号：{{ record.id }}, 操作类型：{{record.name}}, 文件来源：{{record.type}}, 时间：{{record.time}}
+                <form name="get_detail" method="GET" action = "../detail/{{record.username}}/{{record.id}}">
+                    <input value = "查看细节" type = "submit" >
+                </form>
+                <form name="get_detail" method="POST" action = "../delete/{{record.username}}/{{record.id}}">
+                    <input value = "删除记录" type = "submit" >
+                </form><br />
+            </span>
+        {% endfor %}
+    </div>
+
+    <div id="pages" >
+                {% if records.has_previous %}
+                    <a href="?page={{ records.previous_page_number }}">
+                        <button>上一页</button>
+                    </a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ records.number }} of {{ records.paginator.num_pages }}</span>
+
+                {% if records.has_next %}
+                    <a href="?page={{ records.next_page_number }}">
+                        <button>下一页</button>
+                    </a>
+                {% endif %}
+    </div>
+
+    <a href = '../index'>
+            <button>返回主页</button>
+    </a>
+</body>

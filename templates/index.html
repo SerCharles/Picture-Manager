@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Pax Romana</title>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    </head>
+    <body>
+<h1>你好, {{username}}</h1><br>
+<h2>请在本地选择一个jpg/jpeg格式的图片</h2>
+<form class="form-horizontal" enctype='multipart/form-data' method='post' action='javascript:;'>
+    <input type="file" accept="image/jpeg" name = "source_image" id="file_input"/><br>
+    <button onclick="handle_file()">上传</button>
+    <input name="reset" type="reset" value="重置" /><br>
+    原图：<img class="oldImg_file"/>
+    depth结果：<img class="newImg_file_depth"/>
+    segmentation结果：<img class="newImg_file_segmentation"/>
+<script>
+//ajax代码，用于读取输入文件，并且和后端建立连接
+function handle_file_depth() {
+    //读取时间，文件
+    let formData = new FormData();
+    let timestamp=new Date().getTime();
+    //建立请求的formdata
+    formData.append("source_image", document.getElementById('file_input').files[0])
+    formData.append('name', 'depth')
+    formData.append('content', 'No URL.')
+    formData.append('time', timestamp)
+    //设置ajax请求
+    $.ajax({
+        type: 'POST',
+        url: '/service/',
+        data: formData,
+        processData: false,
+        contentType: false,
+        //如果成功，显示图片
+        success: function (data) {
+            $(".oldImg_file").attr("src", data["original"])
+            $(".newImg_file_depth").attr("src", data["result"])
+        },
+        error: function (err) {
+            console.log(err.message);
+        }
+    })
+}
+function handle_file_segmentation() {    
+    //读取时间，文件
+    let formData = new FormData();
+    let timestamp=new Date().getTime();
+    //建立请求的formdata
+    formData.append("source_image", document.getElementById('file_input').files[0])
+    formData.append('name', 'segmentation')
+    formData.append('content', 'No URL.')
+    formData.append('time', timestamp)
+    //设置ajax请求
+    $.ajax({
+        type: 'POST',
+        url: '/service/',
+        data: formData,
+        processData: false,
+        contentType: false,
+        //如果成功，显示图片
+        success: function (data) {
+            $(".oldImg_file").attr("src", data["original"])
+            $(".newImg_file_segmentation").attr("src", data["result"])
+        },
+        error: function (err) {
+            console.log(err.message);
+        }
+    })
+}
+//主函数，发两个请求
+function handle_file() {
+    handle_file_depth();
+    handle_file_segmentation();
+}
+</script>
+</form>
+<br>
+
+
+
+
+<h2>或者在下方输入图片链接</h2>
+<form class="form-horizontal" enctype='multipart/form-data' method='post' action='javascript:;'>
+    链接：<input type="text" name = "link" id = "link_input" size="15" maxlength="1000" ><br>
+    <button onclick="handle_link()">上传</button>
+    <input name="reset" type="reset" value="重置" /><br>
+    原图：<img class="oldImg_link"/>
+    depth结果：<img class="newImg_link_depth"/>
+    segmentation结果：<img class="newImg_link_segmentation"/>
+
+<script>
+//ajax代码，用于读取输入链接，并且和后端建立连接
+function handle_link_depth() {
+    //读取时间，连接
+    let link = document.getElementById("link_input").value;
+    let timestamp=new Date().getTime()
+    //建立ajax请求
+    $.ajax({
+        type: 'POST',
+        url: '/service/',
+        data: {"name":"depth","content":link, "time":timestamp},
+        //成功，返回显示图片
+        success: function (data) {
+            $(".oldImg_link").attr("src", data["original"])
+            $(".newImg_link_depth").attr("src", data["result"])
+        },
+        error: function (err) {
+            console.log(err.message);
+        }
+    })
+}
+function handle_link_segmentation() {
+    //读取时间，连接
+    let link = document.getElementById("link_input").value;
+    let timestamp=new Date().getTime()
+    //建立ajax请求
+    $.ajax({
+        type: 'POST',
+        url: '/service/',
+        data: {"name":"segmentation","content":link, "time":timestamp},
+        //成功：返回显示图片
+        success: function (data) {
+            $(".oldImg_link").attr("src", data["original"])
+            $(".newImg_link_segmentation").attr("src", data["result"])
+
+        },
+        error: function (err) {
+            console.log(err.message);
+        }
+    })
+}
+//主函数
+function handle_link() {
+    handle_link_depth();
+    handle_link_segmentation();
+}
+</script>
+</form>
+
+<br><br><br>  
+
+
+
+<h2>查看历史记录</h2>
+<form method='get' action='history/'>
+    选择开始日期：<input type="date" name = "start_date" value="1970-01-01"/><br>
+    选择结束日期：<input type="date" name = "end_date" value="2019-08-10"/><br>
+    <input type = "submit" value = "确定">
+</form>
+
+<h2>按时间删除历史记录</h2>
+<form method='post' action='delete_many'>
+    选择开始日期：<input type="date" name = "start_date" value="1970-01-01"/><br>
+    选择结束日期：<input type="date" name = "end_date" value="2019-08-10"/><br>
+    <input type = "submit" value = "确定">
+</form>
+
+
+<br>
+
+<a href = 'history'>
+    <button>查看全部历史记录</button>
+</a>
+<br>
+
+<a href = 'logout'>
+        <button>注销</button>
+</a>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% if logged == True %}
+   已登录，不能再次登录和注册，请先登出。<br>
+    <a href = "index">
+        <button type="button">返回主页</button>
+    </a>
+
+{% else %}
+   未登录，请先登录。<br>
+   <a href = "login">
+    <button type="button">返回登录</button>
+    </a>
+{% endif %}

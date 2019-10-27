@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>注册界面</title>
+    </head>
+    <body>
+    注册界面：
+    <form name="my_Form" method="POST">
+        {% csrf_token %}
+        帐号：<input type="text" name = "username" value="" size="15" maxlength="32"><br>
+        密码：<input type="password" name = "password" value="" size="15" maxlength="32"><br>
+        <input name="submit" type="submit" value="确定" />
+            <a href = "login">
+                <button type="button">返回登录</button>
+            </a>    
+        </form>
+        提示：用户名必须为数字，大小写英文字母和下划线，而且长度不得超过32。
+
+    <div>
+        {{result}}
+        <div>   
+            {{message}}
+        </div>
+
+    </div>
+
+
+</body>
+</html>

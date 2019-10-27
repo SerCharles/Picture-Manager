@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>登录界面</title>
+    </head>
+    <body>
+    登录界面：
+    <form name="my_Form" method="POST">
+        {% csrf_token %}
+        帐号：<input type="text" name = "username" value="" size="15" maxlength="32"><br>
+        密码：<input type="password" name = "password" value="" size="15" maxlength="32"><br>
+        <input name="submit" type="submit" value="确定" />
+        <a href = "logon">
+            <button type="button">去注册</button>
+        </a>
+    </form>
+
+    
+    <div>
+        {{result}}
+        <div>   
+            {{message}}
+        </div>
+
+    </div>
+
+
+</body>
+</html>

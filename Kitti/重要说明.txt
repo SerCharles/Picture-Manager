@@ -1,0 +1,12 @@
+配置步骤：
+请将model_sn.meta, model_sn.data-00000-of-00001,vgg16.npy下载后放置到/DATA文件夹下。
+请将model.ckpt-15999下载后放到/RUNS/KittiSeg_pretrained文件夹下
+
+模型下载：
+模型下载地址：https://cloud.tsinghua.edu.cn/d/efaabb8d8a3a4c1993ca/
+有效期30天，如30天内未能及时下载，或发现链接失效，请联系武笑石。
+微信：tgxs002
+邮箱：13521428950@163.com
+
+关键说明：
+Kitti 文件夹下的代码来源于一些论文的demo，具体将会在文档中说明，仅用于实现图片处理的功能，并非本次作业的关键代码。
